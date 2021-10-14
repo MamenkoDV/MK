@@ -1,25 +1,52 @@
 "use strict";
 class Player {
-	constructor(name, hp, img, weapon) {
+	constructor(
+		name,
+		hp,
+		img,
+		weapon = ["default nozhik", "default  lopata", "default lomik"]
+	) {
 		this.name = name;
 		this.hp = hp;
 		this.img = img;
-		this.weapon = ["default nozhik", "default  lopata", "default lomik"];
+		this.weapon = weapon;
 	}
 
 	attack() {
 		console.log(`${this.name} fight`);
 	}
 }
-const player1 = new Player(
+function createPlayer({ name = "Untitled", hp: life = 100, img, weapon }) {
+	let $player = document.createElement("div");
+	const arena = document.querySelector("div.arenas");
+	$player.classList.add("player1");
+	arena.appendChild($player);
+	$player.insertAdjacentHTML(
+		"afterBegin",
+		`
+    <div class="progressbar">
+			<div class="life">${life}</div>
+			<div class="name">${name}</div>
+		</div>
+		<div class="character">
+			<img src="${img}" />
+		</div>
+	</div>;
+    `
+	);
+}
+
+let player1 = new Player(
 	"Scorpion",
-	120,
-	"http://reactmarathon-api.herokuapp.com/assets/scorpion.gif"
+	70,
+	"http://reactmarathon-api.herokuapp.com/assets/scorpion.gif",
+	[]
 );
-const player2 = new Player(
+let player2 = new Player(
 	"Sonya",
-	110,
-	"http://reactmarathon-api.herokuapp.com/assets/sonya.gif"
+	100,
+	"http://reactmarathon-api.herokuapp.com/assets/sonya.gif",
+	[]
 );
-player1.attack();
-player2.attack();
+createPlayer(player1);
+createPlayer(player2);
